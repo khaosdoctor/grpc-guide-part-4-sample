@@ -1,13 +1,15 @@
 const grpc = require('grpc')
 const protoLoader = require('@grpc/proto-loader')
 const path = require('path')
-
+const notes = require('../notes.json')
 const protoObject = protoLoader.loadSync(path.resolve(__dirname, '../proto/notes.proto'))
 const NotesDefinition = grpc.loadPackageDefinition(protoObject)
 
-const notes = require('fs').createReadStream(path.resolve('../notes.json'))
 function List (call) {
-  return callback(null, { notes })
+  for (const note of notes) {
+    call.write(note)
+  }
+  call.end()
 }
 
 function Find ({ request: { id } }, callback) {

@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 service NoteService {
-  rpc List (Void) returns (stream NoteListResponse);
+  rpc List (Void) returns (stream Note);
   rpc Find (NoteFindRequest) returns (NoteFindResponse);
 }
 
@@ -22,8 +22,4 @@ message NoteFindRequest {
 // Responses
 message NoteFindResponse {
   Note note = 1;
-}
-
-message NoteListResponse {
-  repeated Note notes = 1;
 }

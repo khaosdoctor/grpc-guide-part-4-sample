@@ -22,12 +22,8 @@ const client = new NotesDefinition.NoteService('localhost:50051', grpc.credentia
 promisify(client)
 
 
-client.listAsync({}).then(console.log)
-client.list({}, (err, notes) => {
-  if (err) throw err
-  console.log(notes)
-})
-
+const noteStream = client.list({})
+noteStream.on('data', console.log)
 
 client.findAsync({ id: 2 }).then(console.log).catch(console.error)
 client.find({ id: 2 }, (err, { note }) => {
