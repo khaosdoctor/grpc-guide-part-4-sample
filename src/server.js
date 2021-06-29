@@ -5,12 +5,8 @@ const path = require('path')
 const protoObject = protoLoader.loadSync(path.resolve(__dirname, '../proto/notes.proto'))
 const NotesDefinition = grpc.loadPackageDefinition(protoObject)
 
-const notes = [
-  { id: 1, title: 'Note 1', description: 'Content 1' },
-  { id: 2, title: 'Note 2', description: 'Content 2' }
-]
-
-function List (_, callback) {
+const notes = require('fs').createReadStream(path.resolve('../notes.json'))
+function List (call) {
   return callback(null, { notes })
 }
 
